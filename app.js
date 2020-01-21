@@ -5,8 +5,7 @@ const Cors = require('cors'); // that package prevents from cross-origin-resourc
 
 const tweetRoutes = require('./Routes/tweet')
 
-const User = require('./app/models').User;
-const Tweet = require('./app/models').Tweet;
+const relations = require('./app/relations');
 
 const app = express();
 app.use(morgan('dev'));
@@ -20,8 +19,8 @@ app.use(bodyParser.json());
 app.use('/tweets', tweetRoutes);
 
 app.get('/test', (req,res,next) => {
-  User.findAll({
-    include: [Tweet]
+  relations.User.findAll({
+    include: [relations.Tweet]
   }).then(result => {
     res.send(result)
     
